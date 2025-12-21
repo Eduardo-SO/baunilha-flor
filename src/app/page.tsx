@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import heroImage from "../../public/images/hero.png";
+import { Product } from "@/types/product";
 
 
 export default async function Home() {
@@ -65,7 +66,7 @@ export default async function Home() {
           {featuredProducts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {featuredProducts.map((product) => (
+                {featuredProducts.map((product: Product) => (
                   <ProductCard 
                     key={product.id} 
                     product={{

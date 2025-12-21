@@ -28,13 +28,19 @@ export function ProductCard({ product }: ProductCardProps) {
     <>
       <Card className="overflow-hidden transition-all hover:shadow-lg cursor-pointer pt-0" onClick={() => setIsModalOpen(true)}>
         <div className="relative aspect-square w-full overflow-hidden bg-muted">
-          <Image
+          <img
+            src={product.imageUrl}
+            alt={product.title}
+            className="absolute top-0 left-0 w-full h-full object-cover transition-transform hover:scale-105" 
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+          {/* <Image
             src={product.imageUrl}
             alt={product.title}
             fill
             className="object-cover transition-transform hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+          /> */}
         </div>
         <CardHeader>
           <CardTitle className="line-clamp-1">{product.title}</CardTitle>
