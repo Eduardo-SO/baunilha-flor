@@ -5,16 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { MessageCircle } from "lucide-react";
-
-interface Product {
-  id: string;
-  title: string;
-  shortDescription: string;
-  description: string;
-  price: number | string;
-  imageUrl: string;
-  category: string;
-}
+import type { Product } from "@/types/product";
 
 interface ProductModalProps {
   product: Product;

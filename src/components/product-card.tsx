@@ -1,21 +1,12 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { ProductModal } from "./product-modal";
 import { useState } from "react";
-
-interface Product {
-  id: string;
-  title: string;
-  shortDescription: string;
-  description: string;
-  price: number | string;
-  imageUrl: string;
-  category: string;
-}
+import type { Product } from "@/types/product";
 
 interface ProductCardProps {
   product: Product;
@@ -53,7 +44,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <span className="text-2xl font-bold text-primary">
               {formatPrice(product.price)}
             </span>
-            <span className="text-sm text-muted-foreground bg-secondary px-2 py-1 rounded">
+            <span className="text-sm text-secondary-foreground bg-secondary px-2 py-1 rounded">
               {product.category}
             </span>
           </div>

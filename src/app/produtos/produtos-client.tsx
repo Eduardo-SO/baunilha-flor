@@ -20,6 +20,14 @@ export default function ProdutosClient({ initialProducts }: { initialProducts: P
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [filteredProducts, setFilteredProducts] = useState(initialProducts);
 
+  // Verificar hash na URL ao carregar a página
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && categories.includes(hash)) {
+      setSelectedCategory(hash);
+    }
+  }, []);
+
   useEffect(() => {
     if (selectedCategory === "Todos") {
       setFilteredProducts(initialProducts);
@@ -31,7 +39,7 @@ export default function ProdutosClient({ initialProducts }: { initialProducts: P
   }, [selectedCategory, initialProducts]);
 
   return (
-    <div className="min-h-screen py-12 bg-background">
+    <div className="min-h-screen py-12 mt-32 bg-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
