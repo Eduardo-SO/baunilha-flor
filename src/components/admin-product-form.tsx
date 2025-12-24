@@ -1,63 +1,78 @@
-"use client";
+'use client'
 
-import { useState, useTransition } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { createProduct, updateProduct } from "@/app/admin/actions";
-import { Loader2 } from "lucide-react";
+import { useState, useTransition } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { createProduct, updateProduct } from '@/app/admin/actions'
+import { Loader2 } from 'lucide-react'
 
 interface Product {
-  id: string;
-  title: string;
-  shortDescription: string;
-  description: string;
-  price: string;
-  imageUrl: string;
-  category: string;
+  id: string
+  title: string
+  shortDescription: string
+  description: string
+  price: string
+  imageUrl: string
+  category: string
 }
 
 interface AdminProductFormProps {
-  product?: Product | null;
-  isOpen: boolean;
-  onClose: () => void;
+  product?: Product | null
+  isOpen: boolean
+  onClose: () => void
 }
 
-const categories = ["Bolos", "Tortas", "Doces", "Salgados", "Especiais"];
+const categories = ['Bolos', 'Tortas', 'Doces', 'Salgados', 'Especiais']
 
-export function AdminProductForm({ product, isOpen, onClose }: AdminProductFormProps) {
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
+export function AdminProductForm({
+  product,
+  isOpen,
+  onClose,
+}: AdminProductFormProps) {
+  const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
+    e.preventDefault()
+    setError(null)
 
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget)
 
     startTransition(async () => {
       try {
         if (product) {
-          await updateProduct(product.id, formData);
+          await updateProduct(product.id, formData)
         } else {
-          await createProduct(formData);
+          await createProduct(formData)
         }
-        onClose();
+        onClose()
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Erro ao salvar produto");
+        setError(err instanceof Error ? err.message : 'Erro ao salvar produto')
       }
-    });
-  };
+    })
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{product ? "Editar Produto" : "Novo Produto"}</DialogTitle>
+          <DialogTitle>
+            {product ? 'Editar Produto' : 'Novo Produto'}
+          </DialogTitle>
           <DialogDescription>
-            {product ? "Edite as informações do produto" : "Preencha os dados do novo produto"}
+            {product
+              ? 'Edite as informações do produto'
+              : 'Preencha os dados do novo produto'}
           </DialogDescription>
         </DialogHeader>
 
@@ -158,17 +173,21 @@ export function AdminProductForm({ product, isOpen, onClose }: AdminProductFormP
           )}
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose} disabled={isPending}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              disabled={isPending}
+            >
               Cancelar
             </Button>
             <Button type="submit" disabled={isPending}>
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {product ? "Salvar Alterações" : "Criar Produto"}
+              {product ? 'Salvar Alterações' : 'Criar Produto'}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
-

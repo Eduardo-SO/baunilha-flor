@@ -1,65 +1,71 @@
-"use client";
+'use client'
 
-import { useState, useTransition } from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AdminProductForm } from "@/components/admin-product-form";
-import { deleteProduct } from "./actions";
-import { formatPrice } from "@/lib/utils";
-import { Pencil, Trash2, Plus, Loader2 } from "lucide-react";
+import { useState, useTransition } from 'react'
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { AdminProductForm } from '@/components/admin-product-form'
+import { deleteProduct } from './actions'
+import { formatPrice } from '@/lib/utils'
+import { Pencil, Trash2, Plus, Loader2 } from 'lucide-react'
 
 interface Product {
-  id: string;
-  title: string;
-  shortDescription: string;
-  description: string;
-  price: string;
-  imageUrl: string;
-  category: string;
+  id: string
+  title: string
+  shortDescription: string
+  description: string
+  price: string
+  imageUrl: string
+  category: string
 }
 
 interface AdminDashboardProps {
-  products: Product[];
+  products: Product[]
 }
 
 export default function AdminDashboard({ products }: AdminDashboardProps) {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isPending, startTransition] = useTransition();
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [isPending, startTransition] = useTransition()
+  const [deletingId, setDeletingId] = useState<string | null>(null)
 
   const handleEdit = (product: Product) => {
-    setSelectedProduct(product);
-    setIsFormOpen(true);
-  };
+    setSelectedProduct(product)
+    setIsFormOpen(true)
+  }
 
   const handleCreate = () => {
-    setSelectedProduct(null);
-    setIsFormOpen(true);
-  };
+    setSelectedProduct(null)
+    setIsFormOpen(true)
+  }
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Tem certeza que deseja deletar este produto?")) {
-      return;
+    if (!confirm('Tem certeza que deseja deletar este produto?')) {
+      return
     }
 
-    setDeletingId(id);
+    setDeletingId(id)
     startTransition(async () => {
       try {
-        await deleteProduct(id);
-      } catch (error) {
-        alert("Erro ao deletar produto");
+        await deleteProduct(id)
+      } catch {
+        alert('Erro ao deletar produto')
       } finally {
-        setDeletingId(null);
+        setDeletingId(null)
       }
-    });
-  };
+    })
+  }
 
   const handleCloseForm = () => {
-    setIsFormOpen(false);
-    setSelectedProduct(null);
-  };
+    setIsFormOpen(false)
+    setSelectedProduct(null)
+  }
 
   return (
     <div className="min-h-screen py-12 bg-background">
@@ -162,6 +168,5 @@ export default function AdminDashboard({ products }: AdminDashboardProps) {
         onClose={handleCloseForm}
       />
     </div>
-  );
+  )
 }
-

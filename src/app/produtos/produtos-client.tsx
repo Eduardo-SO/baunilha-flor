@@ -1,33 +1,39 @@
-"use client";
+'use client'
 
-import { ProductCard } from "@/components/product-card";
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import type { Product } from "@/types/product";
+import { ProductCard } from '@/components/product-card'
+import { Button } from '@/components/ui/button'
+import { useMemo, useState } from 'react'
+import type { Product } from '@/types/product'
 
-const categories = ["Todos", "Bolos", "Tortas", "Doces", "Salgados", "Especiais"];
+const categories = [
+  'Todos',
+  'Bolos',
+  'Tortas',
+  'Doces',
+  'Salgados',
+  'Especiais',
+]
 
-export default function ProdutosClient({ initialProducts }: { initialProducts: Product[] }) {
-  const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [filteredProducts, setFilteredProducts] = useState(initialProducts);
+function getInitialCategory() {
+  if (typeof window === 'undefined') return 'Todos'
+  const hash = window.location.hash.replace('#', '')
+  return hash && categories.includes(hash) ? hash : 'Todos'
+}
 
-  // Verificar hash na URL ao carregar a página
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash && categories.includes(hash)) {
-      setSelectedCategory(hash);
+export default function ProdutosClient({
+  initialProducts,
+}: {
+  initialProducts: Product[]
+}) {
+  const [selectedCategory, setSelectedCategory] = useState(getInitialCategory)
+  const filteredProducts = useMemo(() => {
+    if (selectedCategory === 'Todos') {
+      return initialProducts
     }
-  }, []);
-
-  useEffect(() => {
-    if (selectedCategory === "Todos") {
-      setFilteredProducts(initialProducts);
-    } else {
-      setFilteredProducts(
-        initialProducts.filter((product) => product.category === selectedCategory)
-      );
-    }
-  }, [selectedCategory, initialProducts]);
+    return initialProducts.filter(
+      (product) => product.category === selectedCategory,
+    )
+  }, [selectedCategory, initialProducts])
 
   return (
     <div className="min-h-screen py-12 mt-32 bg-background">
@@ -38,7 +44,8 @@ export default function ProdutosClient({ initialProducts }: { initialProducts: P
             Nossos Produtos
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Descubra nossa seleção de produtos artesanais feitos com ingredientes de alta qualidade
+            Descubra nossa seleção de produtos artesanais feitos com
+            ingredientes de alta qualidade
           </p>
         </div>
 
@@ -47,7 +54,7 @@ export default function ProdutosClient({ initialProducts }: { initialProducts: P
           {categories.map((category) => (
             <Button
               key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
+              variant={selectedCategory === category ? 'default' : 'outline'}
               onClick={() => setSelectedCategory(category)}
               className="min-w-[100px]"
             >
@@ -74,12 +81,13 @@ export default function ProdutosClient({ initialProducts }: { initialProducts: P
         {/* Results Count */}
         <div className="text-center mt-8">
           <p className="text-sm text-muted-foreground">
-            Mostrando {filteredProducts.length} {filteredProducts.length === 1 ? 'produto' : 'produtos'}
-            {selectedCategory !== "Todos" && ` na categoria "${selectedCategory}"`}
+            Mostrando {filteredProducts.length}{' '}
+            {filteredProducts.length === 1 ? 'produto' : 'produtos'}
+            {selectedCategory !== 'Todos' &&
+              ` na categoria "${selectedCategory}"`}
           </p>
         </div>
       </div>
     </div>
-  );
+  )
 }
-

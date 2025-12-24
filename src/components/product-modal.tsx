@@ -1,29 +1,38 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/utils";
-import { MessageCircle } from "lucide-react";
-import type { Product } from "@/types/product";
+import Image from 'next/image'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { formatPrice } from '@/lib/utils'
+import { MessageCircle } from 'lucide-react'
+import type { Product } from '@/types/product'
 
 interface ProductModalProps {
-  product: Product;
-  isOpen: boolean;
-  onClose: () => void;
+  product: Product
+  isOpen: boolean
+  onClose: () => void
 }
 
 export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
   const whatsappMessage = encodeURIComponent(
-    `Olá! Tenho interesse no produto ${product.title}`
-  );
-  const whatsappUrl = `https://wa.me/5511985668978?text=${whatsappMessage}`;
+    `Olá! Tenho interesse no produto ${product.title}`,
+  )
+  const whatsappUrl = `https://wa.me/5511985668978?text=${whatsappMessage}`
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-serif">{product.title}</DialogTitle>
+          <DialogTitle className="text-2xl font-serif">
+            {product.title}
+          </DialogTitle>
           <DialogDescription>{product.shortDescription}</DialogDescription>
         </DialogHeader>
 
@@ -49,13 +58,15 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
             </div>
 
             <div className="prose prose-sm max-w-none">
-              <p className="text-foreground whitespace-pre-line">{product.description}</p>
+              <p className="text-foreground whitespace-pre-line">
+                {product.description}
+              </p>
             </div>
           </div>
         </div>
 
         <DialogFooter>
-          <Button 
+          <Button
             onClick={() => window.open(whatsappUrl, '_blank')}
             className="w-full sm:w-auto"
             size="lg"
@@ -66,6 +77,5 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
-

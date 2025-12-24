@@ -1,39 +1,39 @@
-"use client";
+'use client'
 
-import React, { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { useOutsideClick } from "@/hooks/use-outside-click";
+import { useEffect, useId, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useOutsideClick } from '@/hooks/use-outside-click'
 
 export default function ExpandableCardDemo() {
   const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
-    null
-  );
-  const ref = useRef<HTMLDivElement>(null);
-  const id = useId();
+    null,
+  )
+  const ref = useRef<HTMLDivElement>(null)
+  const id = useId()
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setActive(false);
+      if (event.key === 'Escape') {
+        setActive(false)
       }
     }
 
-    if (active && typeof active === "object") {
-      document.body.style.overflow = "hidden";
+    if (active && typeof active === 'object') {
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto'
     }
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [active]);
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [active])
 
-  useOutsideClick(ref, () => setActive(null));
+  useOutsideClick(ref, () => setActive(null))
 
   return (
     <>
       <AnimatePresence>
-        {active && typeof active === "object" && (
+        {active && typeof active === 'object' && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -43,7 +43,7 @@ export default function ExpandableCardDemo() {
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {active && typeof active === "object" ? (
+        {active && typeof active === 'object' ? (
           <div className="fixed inset-0  grid place-items-center z-[100]">
             <motion.button
               key={`button-${active.title}-${id}`}
@@ -114,7 +114,7 @@ export default function ExpandableCardDemo() {
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
                   >
-                    {typeof active.content === "function"
+                    {typeof active.content === 'function'
                       ? active.content()
                       : active.content}
                   </motion.div>
@@ -125,7 +125,7 @@ export default function ExpandableCardDemo() {
         ) : null}
       </AnimatePresence>
       <ul className="max-w-2xl mx-auto w-full gap-4">
-        {cards.map((card, index) => (
+        {cards.map((card) => (
           <motion.div
             layoutId={`card-${card.title}-${id}`}
             key={`card-${card.title}-${id}`}
@@ -167,7 +167,7 @@ export default function ExpandableCardDemo() {
         ))}
       </ul>
     </>
-  );
+  )
 }
 
 export const CloseIcon = () => {
@@ -200,16 +200,16 @@ export const CloseIcon = () => {
       <path d="M18 6l-12 12" />
       <path d="M6 6l12 12" />
     </motion.svg>
-  );
-};
+  )
+}
 
 const cards = [
   {
-    description: "Lana Del Rey",
-    title: "Summertime Sadness",
-    src: "https://assets.aceternity.com/demos/lana-del-rey.jpeg",
-    ctaText: "Play",
-    ctaLink: "https://ui.aceternity.com/templates",
+    description: 'Lana Del Rey',
+    title: 'Summertime Sadness',
+    src: 'https://assets.aceternity.com/demos/lana-del-rey.jpeg',
+    ctaText: 'Play',
+    ctaLink: 'https://ui.aceternity.com/templates',
     content: () => {
       return (
         <p>
@@ -224,15 +224,15 @@ const cards = [
           the music industry, earning a dedicated fan base and numerous
           accolades.
         </p>
-      );
+      )
     },
   },
   {
-    description: "Babbu Maan",
-    title: "Mitran Di Chhatri",
-    src: "https://assets.aceternity.com/demos/babbu-maan.jpeg",
-    ctaText: "Play",
-    ctaLink: "https://ui.aceternity.com/templates",
+    description: 'Babbu Maan',
+    title: 'Mitran Di Chhatri',
+    src: 'https://assets.aceternity.com/demos/babbu-maan.jpeg',
+    ctaText: 'Play',
+    ctaLink: 'https://ui.aceternity.com/templates',
     content: () => {
       return (
         <p>
@@ -246,16 +246,16 @@ const cards = [
           singles that have garnered him a massive fan following both in India
           and abroad.
         </p>
-      );
+      )
     },
   },
 
   {
-    description: "Metallica",
-    title: "For Whom The Bell Tolls",
-    src: "https://assets.aceternity.com/demos/metallica.jpeg",
-    ctaText: "Play",
-    ctaLink: "https://ui.aceternity.com/templates",
+    description: 'Metallica',
+    title: 'For Whom The Bell Tolls',
+    src: 'https://assets.aceternity.com/demos/metallica.jpeg',
+    ctaText: 'Play',
+    ctaLink: 'https://ui.aceternity.com/templates',
     content: () => {
       return (
         <p>
@@ -269,15 +269,15 @@ const cards = [
           albums and singles that have garnered them a massive fan following
           both in the United States and abroad.
         </p>
-      );
+      )
     },
   },
   {
-    description: "Led Zeppelin",
-    title: "Stairway To Heaven",
-    src: "https://assets.aceternity.com/demos/led-zeppelin.jpeg",
-    ctaText: "Play",
-    ctaLink: "https://ui.aceternity.com/templates",
+    description: 'Led Zeppelin',
+    title: 'Stairway To Heaven',
+    src: 'https://assets.aceternity.com/demos/led-zeppelin.jpeg',
+    ctaText: 'Play',
+    ctaLink: 'https://ui.aceternity.com/templates',
     content: () => {
       return (
         <p>
@@ -290,15 +290,15 @@ const cards = [
           numerous hit albums and singles that have garnered them a massive fan
           following both in the United Kingdom and abroad.
         </p>
-      );
+      )
     },
   },
   {
-    description: "Mustafa Zahid",
-    title: "Toh Phir Aao",
-    src: "https://assets.aceternity.com/demos/toh-phir-aao.jpeg",
-    ctaText: "Play",
-    ctaLink: "https://ui.aceternity.com/templates",
+    description: 'Mustafa Zahid',
+    title: 'Toh Phir Aao',
+    src: 'https://assets.aceternity.com/demos/toh-phir-aao.jpeg',
+    ctaText: 'Play',
+    ctaLink: 'https://ui.aceternity.com/templates',
     content: () => {
       return (
         <p>
@@ -312,7 +312,7 @@ const cards = [
           India and abroad, solidifying Emraan Hashmi&apos;s status as a
           versatile actor.
         </p>
-      );
+      )
     },
   },
-];
+]

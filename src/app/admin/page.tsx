@@ -1,14 +1,14 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { SignIn } from "@clerk/nextjs";
-import prisma from "@/lib/prisma";
-import AdminDashboard from "./admin-dashboard";
-import type { Product as PrismaProduct } from "@prisma/client";
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
+import { SignIn } from '@clerk/nextjs'
+import prisma from '@/lib/prisma'
+import AdminDashboard from './admin-dashboard'
+import type { Product as PrismaProduct } from '@prisma/client'
 
-const ADMIN_USER_ID = process.env.ADMIN_USER_ID;
+const ADMIN_USER_ID = process.env.ADMIN_USER_ID
 
 export default async function AdminPage() {
-  const { userId } = await auth();
+  const { userId } = await auth()
 
   // Se não tiver userId, mostrar página de login
   if (!userId) {
@@ -23,25 +23,25 @@ export default async function AdminPage() {
               Faça login para acessar o painel administrativo
             </p>
           </div>
-          <SignIn 
+          <SignIn
             routing="path"
             path="/admin"
             afterSignInUrl="/admin"
             appearance={{
               elements: {
-                rootBox: "mx-auto",
-                card: "bg-card border-border",
+                rootBox: 'mx-auto',
+                card: 'bg-card border-border',
               },
             }}
           />
         </div>
       </div>
-    );
+    )
   }
 
   // Se tiver userId mas não for admin, redirecionar
   if (userId !== ADMIN_USER_ID) {
-    redirect("/");
+    redirect('/')
   }
 
   // Se for admin, mostrar dashboard
@@ -49,14 +49,14 @@ export default async function AdminPage() {
     orderBy: {
       createdAt: 'desc',
     },
-  });
+  })
 
   const serializedProducts = products.map((product: PrismaProduct) => ({
     ...product,
     price: product.price.toString(),
     createdAt: product.createdAt.toISOString(),
     updatedAt: product.updatedAt.toISOString(),
-  }));
+  }))
 
-  return <AdminDashboard products={serializedProducts} />;
+  return <AdminDashboard products={serializedProducts} />
 }
