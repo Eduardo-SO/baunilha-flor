@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { SignIn } from "@clerk/nextjs";
 import prisma from "@/lib/prisma";
 import AdminDashboard from "./admin-dashboard";
+import type { Product as PrismaProduct } from "@prisma/client";
 
 const ADMIN_USER_ID = process.env.ADMIN_USER_ID;
 
@@ -50,7 +51,7 @@ export default async function AdminPage() {
     },
   });
 
-  const serializedProducts = products.map((product) => ({
+  const serializedProducts = products.map((product: PrismaProduct) => ({
     ...product,
     price: product.price.toString(),
     createdAt: product.createdAt.toISOString(),

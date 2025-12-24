@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import ProdutosClient from "./produtos-client";
+import type { Product as PrismaProduct } from "@prisma/client";
 
 export default async function ProdutosPage() {
   const products = await prisma.product.findMany({
@@ -8,7 +9,7 @@ export default async function ProdutosPage() {
     },
   });
 
-  const serializedProducts = products.map((product) => ({
+  const serializedProducts = products.map((product: PrismaProduct) => ({
     ...product,
     price: product.price.toString(),
     createdAt: product.createdAt.toISOString(),
