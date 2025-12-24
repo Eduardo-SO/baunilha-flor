@@ -3,16 +3,7 @@
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-
-interface Product {
-  id: string;
-  title: string;
-  shortDescription: string;
-  description: string;
-  price: string;
-  imageUrl: string;
-  category: string;
-}
+import type { Product } from "@/types/product";
 
 const categories = ["Todos", "Bolos", "Tortas", "Doces", "Salgados", "Especiais"];
 

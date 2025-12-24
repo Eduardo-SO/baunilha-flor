@@ -3,9 +3,9 @@ export type Product = {
   title: string;
   shortDescription: string;
   description: string;
-  price: number;
+  price: number | string;
   imageUrl: string;
   category: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 };
