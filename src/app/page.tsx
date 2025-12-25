@@ -3,12 +3,11 @@ import { Button } from '@/components/ui/button'
 import prisma from '@/lib/prisma'
 import { ArrowRight } from 'lucide-react'
 import { ExpandableCardGrid } from '@/components/expandable-card-grid'
-import { ExpandableCardGridOptimized } from '@/components/expandable-card-grid-optimized'
 
 export default async function Home() {
   // Buscar os últimos 6 produtos para vitrine
   const featuredProducts = await prisma.product.findMany({
-    take: 6,
+    take: 8,
     orderBy: {
       createdAt: 'desc',
     },
@@ -47,7 +46,7 @@ export default async function Home() {
               <Button
                 asChild
                 size="lg"
-                className="w-full text-base shadow-lg transition-all hover:scale-105 sm:w-auto sm:text-lg"
+                className="w-full text-base text-secondary shadow-lg transition-all hover:scale-105 sm:w-auto sm:text-lg"
               >
                 <Link href="/produtos">
                   Ver Produtos
@@ -89,7 +88,7 @@ export default async function Home() {
           {featuredProducts.length > 0 ? (
             <>
               <div className="mb-8">
-                <ExpandableCardGridOptimized
+                <ExpandableCardGrid
                   products={featuredProducts.map((product) => ({
                     ...product,
                     price: product.price.toNumber(),

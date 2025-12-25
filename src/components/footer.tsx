@@ -9,7 +9,7 @@ export default function Footer() {
     <footer className="w-full p-4 mx-auto relative overflow-hidden">
       {/* Fundo rosa vibrante com padrão decorativo */}
       <div
-        className="relative w-full bg-primary/20 py-12 md:py-16 rounded-2xl"
+        className="relative w-full bg-primary/20 pt-12 pb-4 rounded-2xl"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}
@@ -18,7 +18,8 @@ export default function Footer() {
           {/* Seção Principal - Título, Subtítulo e Botão */}
           <div className="text-center mb-12 md:mb-16">
             <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4">
-              Sobre a Baunilha e Flor de Sal
+              <span className="text-secondary">Baunilha &</span>{' '}
+              <span className="text-primary">Flor de Sal</span>
             </h2>
             <p className="text-base md:text-lg mb-8 max-w-3xl mx-auto">
               Somos uma confeitaria artesanal apaixonada por criar experiências
@@ -35,7 +36,7 @@ export default function Footer() {
               href="https://wa.me/5511985668978"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-primary text-black font-bold px-8 py-3 md:px-12 md:py-4 rounded-lg shadow-lg hover:shadow-xl transition-all hover:scale-105"
+              className="inline-block bg-primary text-white font-bold px-8 py-3 md:px-12 md:py-4 rounded-lg shadow-lg hover:shadow-xl transition-all hover:scale-105"
             >
               Fale Conosco
             </Link>
@@ -46,26 +47,11 @@ export default function Footer() {
             {/* Logo e Links de Navegação - Lado Esquerdo */}
             <div className="flex flex-col md:flex-row items-center gap-6">
               <Logo />
-              <nav className="flex gap-6">
-                <Link
-                  href="/#sobre"
-                  className="text-sm md:text-base hover:underline transition-colors"
-                >
-                  Sobre
-                </Link>
-                <Link
-                  href="/termos"
-                  className="text-sm md:text-base hover:underline transition-colors"
-                >
-                  Termos
-                </Link>
-                <Link
-                  href="/politica"
-                  className="text-sm md:text-base hover:underline transition-colors"
-                >
-                  Política
-                </Link>
-              </nav>
+
+              <p className="text-muted-foreground text-sm md:text-base">
+                © {new Date().getFullYear()} Baunilha e Flor de Sal. Todos os
+                direitos reservados.
+              </p>
             </div>
 
             {/* Ícones de Redes Sociais - Lado Direito */}
@@ -89,14 +75,6 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
-          </div>
-
-          {/* Copyright - Centralizado na parte inferior */}
-          <div className="mt-8 pt-6 text-center">
-            <p className="text-muted-foreground text-sm md:text-base">
-              © {new Date().getFullYear()} Baunilha e Flor de Sal. Todos os
-              direitos reservados.
-            </p>
           </div>
         </div>
       </div>
