@@ -6,7 +6,7 @@ export default function Header() {
   const items = [
     {
       label: 'Home',
-      bgColor: '#F5B3B3', // primary color - tom rosado/coral
+      bgColor: '#532a19',
       textColor: '#fff',
       links: [
         { label: 'Início', ariaLabel: 'Ir para página inicial', href: '/' },
@@ -24,7 +24,7 @@ export default function Header() {
     },
     {
       label: 'Produtos',
-      bgColor: '#5A4A6C', // secondary color - tom roxo escuro
+      bgColor: '#532a19',
       textColor: '#fff',
       links: [
         { label: 'Bolos', ariaLabel: 'Ver bolos', href: '/produtos#Bolos' },
@@ -35,8 +35,8 @@ export default function Header() {
     },
     {
       label: 'Contato',
-      bgColor: '#F0F8B0', // accent color - tom amarelado claro
-      textColor: '#000',
+      bgColor: '#532a19',
+      textColor: '#fff',
       links: [
         {
           label: 'WhatsApp',
