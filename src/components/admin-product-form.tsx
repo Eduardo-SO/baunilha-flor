@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { createProduct, updateProduct } from '@/app/admin/actions'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Trash2 } from 'lucide-react'
 
 interface Product {
   id: string
@@ -30,6 +30,7 @@ interface AdminProductFormProps {
   product?: Product | null
   isOpen: boolean
   onClose: () => void
+  onDelete?: () => void
 }
 
 const categories = ['Bolos', 'Tortas', 'Doces', 'Salgados', 'Especiais']
@@ -38,6 +39,7 @@ export function AdminProductForm({
   product,
   isOpen,
   onClose,
+  onDelete,
 }: AdminProductFormProps) {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
@@ -172,19 +174,47 @@ export function AdminProductForm({
             </div>
           )}
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              disabled={isPending}
-            >
-              Cancelar
-            </Button>
-            <Button type="submit" disabled={isPending}>
-              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {product ? 'Salvar Alterações' : 'Criar Produto'}
-            </Button>
+          <DialogFooter className="flex-col sm:flex-row gap-2">
+            {product && onDelete && (
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={() => {
+                  if (
+                    confirm(
+                      'Tem certeza que deseja deletar este produto? Esta ação não pode ser desfeita.',
+                    )
+                  ) {
+                    onDelete()
+                    onClose()
+                  }
+                }}
+                disabled={isPending}
+                className="w-full sm:w-auto"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Deletar Produto
+              </Button>
+            )}
+            <div className="flex gap-2 w-full sm:w-auto">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+                disabled={isPending}
+                className="flex-1 sm:flex-initial"
+              >
+                Cancelar
+              </Button>
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="flex-1 sm:flex-initial"
+              >
+                {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {product ? 'Salvar Alterações' : 'Criar Produto'}
+              </Button>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>
