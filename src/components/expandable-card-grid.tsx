@@ -142,7 +142,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
                 src={active.src}
                 alt={active.title}
                 className="w-full h-60 lg:h-60 sm:rounded-lg object-cover object-top"
-                loading="lazy"
+                // loading="lazy"
               />
             </div>
 
@@ -187,7 +187,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
                   src={card.src}
                   alt={card.title}
                   className="h-48 w-full rounded-lg object-cover object-center"
-                  loading="lazy"
+                  // loading="lazy"
                 />
               </div>
               <div className="flex flex-col gap-2 h-full">
