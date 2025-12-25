@@ -68,7 +68,7 @@ export default function AdminDashboard({ products }: AdminDashboardProps) {
   }
 
   return (
-    <div className="min-h-screen py-12 bg-background">
+    <div className="min-h-screen pb-12 pt-36 bg-background">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
           <div>

@@ -13,7 +13,7 @@ export default async function AdminPage() {
   // Se não tiver userId, mostrar página de login
   if (!userId) {
     return (
-      <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center py-12">
+      <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center pb-12 pt-36">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <h1 className="font-serif text-3xl font-bold text-foreground mb-2">
