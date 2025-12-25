@@ -1,6 +1,6 @@
 'use client'
 
-import { ProductCard } from '@/components/product-card'
+import { ExpandableCardGrid } from '@/components/expandable-card-grid'
 import { Button } from '@/components/ui/button'
 import { useMemo, useState } from 'react'
 import type { Product } from '@/types/product'
@@ -65,11 +65,7 @@ export default function ProdutosClient({
 
         {/* Products Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <ExpandableCardGrid products={filteredProducts} />
         ) : (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg">
