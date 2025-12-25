@@ -27,7 +27,7 @@ export default async function Home() {
         {/* <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-background/10 to-transparent z-0" /> */}
         <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/50 to-transparent z-0" />
 
-        <div className="relative z-10 container w-7xl mx-auto flex min-h-screen flex-col items-center justify-start px-4 py-16 md:flex-row md:items-center md:justify-start md:gap-8 lg:gap-12">
+        <div className="relative z-10 container w-full max-w-7xl mx-auto flex min-h-screen flex-col items-center justify-start px-4 py-16 md:flex-row md:items-center md:justify-start md:gap-8 lg:gap-12">
           {/* Conteúdo de texto - lado esquerdo */}
           <div className="relative z-10 mt-auto lg:mt-20 h-full w-full max-w-2xl space-y-6 rounded-2xl text-left md:mt-0 md:text-left lg:space-y-8">
             {/* Título principal */}
