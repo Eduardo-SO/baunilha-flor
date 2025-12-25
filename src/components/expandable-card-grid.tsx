@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useOutsideClick } from '@/hooks/use-outside-click'
 import type { Product } from '@/types/product'
 import { formatPrice } from '@/lib/utils'
-import { Heart, ShoppingBag } from 'lucide-react'
 
 interface ExpandableCardGridProps {
   products: Product[]
@@ -217,10 +216,6 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
                   >
                     {card.title}
                   </motion.h3>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <Heart className="h-4 w-4 text-primary stroke-2" />
-                    <ShoppingBag className="h-4 w-4 text-primary stroke-2" />
-                  </div>
                 </div>
                 <div className="text-sm text-muted-foreground">
                   {card.description}

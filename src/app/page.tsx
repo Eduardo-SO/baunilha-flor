@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import prisma from '@/lib/prisma'
 import { ArrowRight } from 'lucide-react'
 import { ExpandableCardGrid } from '@/components/expandable-card-grid'
+import { ExpandableCardGridOptimized } from '@/components/expandable-card-grid-optimized'
 
 export default async function Home() {
   // Buscar os últimos 6 produtos para vitrine
@@ -88,7 +89,7 @@ export default async function Home() {
           {featuredProducts.length > 0 ? (
             <>
               <div className="mb-8">
-                <ExpandableCardGrid
+                <ExpandableCardGridOptimized
                   products={featuredProducts.map((product) => ({
                     ...product,
                     price: product.price.toNumber(),
