@@ -98,7 +98,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
       </AnimatePresence>
       <AnimatePresence>
         {active && typeof active === 'object' ? (
-          <div className="fixed inset-0 grid place-items-center z-100">
+          <div className="fixed inset-10 grid place-items-center z-100">
             <motion.button
               key={`button-${active.id}-${id}`}
               layout
@@ -114,7 +114,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
                   duration: 0.05,
                 },
               }}
-              className="flex absolute top-2 right-2 lg:hidden items-center justify-center bg-white rounded-full h-6 w-6"
+              className="flex absolute top-2 right-2 lg:hidden rounded-lg items-center justify-center bg-white rounded-full h-6 w-6"
               onClick={() => setActive(null)}
             >
               <CloseIcon />
@@ -122,7 +122,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
             <motion.div
               layoutId={`card-${active.id}-${id}`}
               ref={ref}
-              className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-card dark:bg-card sm:rounded-3xl overflow-hidden border border-border"
+              className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-card dark:bg-card rounded-xl sm:rounded-3xl overflow-hidden"
             >
               <motion.div layoutId={`image-${active.id}-${id}`}>
                 <img
@@ -188,7 +188,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
           </div>
         ) : null}
       </AnimatePresence>
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {cards.map((card) => (
           <motion.div
             layoutId={`card-${card.id}-${id}`}

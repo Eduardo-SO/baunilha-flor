@@ -221,7 +221,7 @@ const CardNav: React.FC<CardNavProps> = ({
       >
         <div className="card-nav-top absolute inset-x-0 top-0 h-[60px] flex items-center justify-between p-2 pl-[1.1rem] z-2">
           <div
-            className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''} group h-full flex flex-col items-center justify-center cursor-pointer gap-[6px] order-2 md:order-none`}
+            className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''} group h-full flex flex-col items-center justify-center cursor-pointer gap-[6px] order-2 md:order-0`}
             onClick={toggleMenu}
             role="button"
             aria-label={isExpanded ? 'Close menu' : 'Open menu'}
@@ -229,18 +229,18 @@ const CardNav: React.FC<CardNavProps> = ({
             style={{ color: menuColor || '#000' }}
           >
             <div
-              className={`hamburger-line w-[30px] h-[2px] bg-current transition-[transform,opacity,margin] duration-300 ease-linear [transform-origin:50%_50%] ${
+              className={`hamburger-line w-[30px] h-[2px] bg-current transition-[transform,opacity,margin] duration-300 ease-linear origin-[50%_50%] ${
                 isHamburgerOpen ? 'translate-y-[4px] rotate-45' : ''
               } group-hover:opacity-75`}
             />
             <div
-              className={`hamburger-line w-[30px] h-[2px] bg-current transition-[transform,opacity,margin] duration-300 ease-linear [transform-origin:50%_50%] ${
+              className={`hamburger-line w-[30px] h-[2px] bg-current transition-[transform,opacity,margin] duration-300 ease-linear origin-[50%_50%] ${
                 isHamburgerOpen ? '-translate-y-[4px] -rotate-45' : ''
               } group-hover:opacity-75`}
             />
           </div>
 
-          <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none">
+          <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-0">
             {/* <img src={logo} alt={logoAlt} className="logo h-[28px]" /> */}
 
             <Logo />
