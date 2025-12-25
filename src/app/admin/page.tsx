@@ -4,8 +4,7 @@ import { SignIn } from '@clerk/nextjs'
 import prisma from '@/lib/prisma'
 import AdminDashboard from './admin-dashboard'
 import type { Product as PrismaProduct } from '@prisma/client'
-
-const ADMIN_USER_ID = process.env.ADMIN_USER_ID
+import { isAdmin } from '@/lib/admin-utils'
 
 export default async function AdminPage() {
   const { userId } = await auth()
@@ -40,7 +39,7 @@ export default async function AdminPage() {
   }
 
   // Se tiver userId mas não for admin, redirecionar
-  if (userId !== ADMIN_USER_ID) {
+  if (!isAdmin(userId)) {
     redirect('/')
   }
 

@@ -3,13 +3,12 @@
 import { auth } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
-
-const ADMIN_USER_ID = process.env.ADMIN_USER_ID
+import { isAdmin } from '@/lib/admin-utils'
 
 async function verifyAdmin() {
   const { userId } = await auth()
 
-  if (!userId || userId !== ADMIN_USER_ID) {
+  if (!isAdmin(userId)) {
     throw new Error('Não autorizado')
   }
 

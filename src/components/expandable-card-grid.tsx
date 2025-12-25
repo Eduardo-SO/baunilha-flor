@@ -128,7 +128,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
             </button>
 
             <div className="flex flex-col gap-2 p-4">
-              <h3 className="text-2xl font-serif">{active.title}</h3>
+              <h3 className="text-xl md:text-2xl font-serif">{active.title}</h3>
               <p className="text-muted-foreground text-sm">
                 {active.description}
               </p>
@@ -148,7 +148,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
 
             {/* Conteúdo */}
             <div className="p-4 flex flex-col flex-1 min-h-0">
-              <div className="overflow-y-auto flex-1 max-h-64 md:max-h-96">
+              <div className="overflow-y-auto flex-1">
                 <p className="whitespace-pre-line">{active.content}</p>
               </div>
 
