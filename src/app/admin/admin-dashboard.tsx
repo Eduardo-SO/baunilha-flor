@@ -92,7 +92,7 @@ export default function AdminDashboard({ products }: AdminDashboardProps) {
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex gap-4">
-                      <div className="relative w-24 h-24 rounded-md overflow-hidden bg-muted flex-shrink-0">
+                      <div className="relative w-24 h-24 rounded-md overflow-hidden bg-muted shrink-0">
                         <Image
                           src={product.imageUrl}
                           alt={product.title}

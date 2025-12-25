@@ -49,7 +49,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between">
+          <div className="flex items-start md:items-center md:justify-between flex-col md:flex-row gap-2">
             <span className="text-2xl font-bold text-primary">
               {formatPrice(product.price)}
             </span>

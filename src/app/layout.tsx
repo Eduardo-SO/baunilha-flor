@@ -4,7 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-// import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from '@/components/theme-provider'
 
 const openSans = Open_Sans({
   variable: '--font-sans',
@@ -42,16 +42,16 @@ export default function RootLayout({
         <body
           className={`${openSans.variable} ${pacifico.variable} antialiased`}
         >
-          {/* <ThemeProvider
+          <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
-          > */}
-          <Header />
-          {children}
-          <Footer />
-          {/* </ThemeProvider> */}
+          >
+            <Header />
+            {children}
+            <Footer />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

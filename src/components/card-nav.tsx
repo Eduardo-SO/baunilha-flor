@@ -2,7 +2,9 @@ import React, { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 // use your own icon import if react-icons is not available
 import { GoArrowUpRight } from 'react-icons/go'
+import Link from 'next/link'
 import { Logo } from './logo'
+import { useOutsideClick } from '@/hooks/use-outside-click'
 
 type CardNavLink = {
   label: string
@@ -193,10 +195,23 @@ const CardNav: React.FC<CardNavProps> = ({
     if (el) cardsRef.current[i] = el
   }
 
+  const handleOutsideClick = useCallback(() => {
+    if (isExpanded) {
+      const tl = tlRef.current
+      if (tl) {
+        setIsHamburgerOpen(false)
+        tl.eventCallback('onReverseComplete', () => setIsExpanded(false))
+        tl.reverse()
+      }
+    }
+  }, [isExpanded])
+
+  useOutsideClick(containerRef, handleOutsideClick)
+
   return (
     <div
       ref={containerRef}
-      className={`card-nav-container sticky top-10 left-1/2 -translate-x-1/2 w-[90%] max-w-[800px] z-[99] -mt-15 ${className}`}
+      className={`card-nav-container sticky top-10 mx-auto w-[90%] max-w-[800px] z-30 -mt-15 ${className}`}
       style={{ height: '60px' }}
     >
       <nav
@@ -204,7 +219,7 @@ const CardNav: React.FC<CardNavProps> = ({
         className={`card-nav ${isExpanded ? 'open' : ''} block h-[60px] p-0 rounded-xl shadow-md relative overflow-visible will-change-[height] backdrop-blur-2xl`}
         style={{ backgroundColor: `${baseColor}90` }}
       >
-        <div className="card-nav-top absolute inset-x-0 top-0 h-[60px] flex items-center justify-between p-2 pl-[1.1rem] z-[2]">
+        <div className="card-nav-top absolute inset-x-0 top-0 h-[60px] flex items-center justify-between p-2 pl-[1.1rem] z-2">
           <div
             className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''} group h-full flex flex-col items-center justify-center cursor-pointer gap-[6px] order-2 md:order-none`}
             onClick={toggleMenu}
@@ -236,12 +251,18 @@ const CardNav: React.FC<CardNavProps> = ({
             className="card-nav-cta-button hidden md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-4 items-center h-full font-medium cursor-pointer transition-colors duration-300"
             style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
           >
-            Get Started
+            <a
+              href="https://wa.me/5511985668978"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Fale conosco!
+            </a>
           </button>
         </div>
 
         <div
-          className={`card-nav-content absolute left-0 right-0 top-[60px] p-2 flex flex-col items-stretch gap-2 justify-start z-[1] ${
+          className={`card-nav-content absolute left-0 right-0 top-[60px] p-2 flex flex-col items-stretch gap-2 justify-start z-1 ${
             isExpanded
               ? 'visible pointer-events-auto'
               : 'invisible pointer-events-none'
@@ -265,20 +286,48 @@ const CardNav: React.FC<CardNavProps> = ({
                 {item.label}
               </div>
               <div className="nav-card-links mt-auto flex flex-col gap-[2px]">
-                {item.links?.map((lnk, i) => (
-                  <a
-                    key={`${lnk.label}-${i}`}
-                    className="nav-card-link inline-flex items-center gap-[6px] no-underline cursor-pointer transition-opacity duration-300 hover:opacity-75 text-[15px] md:text-[16px]"
-                    href={lnk.href}
-                    aria-label={lnk.ariaLabel}
-                  >
-                    <GoArrowUpRight
-                      className="nav-card-link-icon shrink-0"
-                      aria-hidden="true"
-                    />
-                    {lnk.label}
-                  </a>
-                ))}
+                {item.links?.map((lnk, i) => {
+                  const isExternalLink =
+                    lnk.href.startsWith('http://') ||
+                    lnk.href.startsWith('https://')
+
+                  const linkClassName =
+                    'nav-card-link inline-flex items-center gap-[6px] no-underline cursor-pointer transition-opacity duration-300 hover:opacity-75 text-[15px] md:text-[16px]'
+
+                  if (isExternalLink) {
+                    return (
+                      <a
+                        key={`${lnk.label}-${i}`}
+                        className={linkClassName}
+                        href={lnk.href}
+                        aria-label={lnk.ariaLabel}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <GoArrowUpRight
+                          className="nav-card-link-icon shrink-0"
+                          aria-hidden="true"
+                        />
+                        {lnk.label}
+                      </a>
+                    )
+                  }
+
+                  return (
+                    <Link
+                      key={`${lnk.label}-${i}`}
+                      className={linkClassName}
+                      href={lnk.href}
+                      aria-label={lnk.ariaLabel}
+                    >
+                      <GoArrowUpRight
+                        className="nav-card-link-icon shrink-0"
+                        aria-hidden="true"
+                      />
+                      {lnk.label}
+                    </Link>
+                  )
+                })}
               </div>
             </div>
           ))}
