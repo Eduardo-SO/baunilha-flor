@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import Image from 'next/image'
 import { useOutsideClick } from '@/hooks/use-outside-click'
 import type { Product } from '@/types/product'
 import { formatPrice } from '@/lib/utils'
