@@ -2,7 +2,7 @@
 
 import { ExpandableCardGrid } from '@/components/expandable-card-grid'
 import { Button } from '@/components/ui/button'
-import { useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 import type { Product } from '@/types/product'
 
 const categories = [
@@ -34,6 +34,14 @@ export default function ProdutosClient({
       (product) => product.category === selectedCategory,
     )
   }, [selectedCategory, initialProducts])
+
+  useLayoutEffect(() => {
+    const initialCategory = getInitialCategory()
+    setTimeout(() => {
+      setSelectedCategory(initialCategory)
+      console.log('initialCategory', initialCategory)
+    }, 0)
+  }, [])
 
   return (
     <div className="min-h-screen py-12 mt-32 bg-background">
