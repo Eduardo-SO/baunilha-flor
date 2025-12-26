@@ -1,12 +1,18 @@
 'use client'
 
-import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import React, { useState, useMemo } from 'react'
 import Image from 'next/image'
-import { useOutsideClick } from '@/hooks/use-outside-click'
 import type { Product } from '@/types/product'
 import { formatPrice } from '@/lib/utils'
 import { ExternalLinkIcon } from 'lucide-react'
 import { Button } from './ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from './ui/dialog'
 
 interface ExpandableCardGridProps {
   products: Product[]
@@ -50,135 +56,84 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
     })
   }, [products])
 
-  const [active, setActive] = useState<CardData | null>(null)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
+  const [open, setOpen] = useState(false)
+  const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
 
-  const handleClose = useCallback(() => {
-    setIsAnimating(true)
-    setTimeout(() => {
-      setActive(null)
-      setIsAnimating(false)
-    }, 200)
-  }, [])
+  const handleCardClick = (card: CardData) => {
+    setSelectedCard(card)
+    setOpen(true)
+  }
 
-  const handleCardClick = useCallback((card: CardData) => {
-    setActive(card)
-    setIsAnimating(true)
-    setTimeout(() => setIsAnimating(false), 300)
-  }, [])
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen)
+    if (!isOpen) {
+      setSelectedCard(null)
+    }
+  }
 
   const whatsappMessage = encodeURIComponent(
-    `Olá! Tenho interesse no produto ${active?.title}`,
+    `Olá! Tenho interesse no produto ${selectedCard?.title}`,
   )
   const whatsappUrl = `https://wa.me/5511985668978?text=${whatsappMessage}`
 
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape' && active) {
-        handleClose()
-      }
-    }
-
-    if (active) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [active, handleClose])
-
-  useOutsideClick(ref, () => {
-    if (active) {
-      handleClose()
-    }
-  })
-
   return (
     <>
-      {/* Overlay com fade otimizado */}
-      {active && (
-        <div
-          className={`fixed inset-0 bg-black/40 h-full w-full z-40 transition-opacity duration-200 ${
-            isAnimating ? 'opacity-0' : 'opacity-100'
-          }`}
-          style={{ willChange: 'opacity' }}
-          onClick={handleClose}
-        />
-      )}
+      <Dialog open={open} onOpenChange={handleOpenChange}>
+        <DialogContent className="w-full max-w-[calc(100%-2rem)] md:max-w-[500px] h-[calc(100%-2rem)] md:h-fit md:max-h-[90%] flex flex-col bg-card dark:bg-card rounded-xl sm:rounded-3xl overflow-hidden p-0 gap-0">
+          {selectedCard && (
+            <>
+              <DialogHeader className="flex flex-col gap-2 p-4">
+                <DialogTitle className="text-xl md:text-2xl font-serif text-left">
+                  {selectedCard.title}
+                </DialogTitle>
+                <DialogDescription className="text-sm text-left">
+                  {selectedCard.description}
+                </DialogDescription>
+              </DialogHeader>
 
-      {/* Modal expandido */}
-      {active && (
-        <div className="fixed inset-10 grid place-items-center z-50 pointer-events-none">
-          <div
-            ref={ref}
-            className={`w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-card dark:bg-card rounded-xl sm:rounded-3xl overflow-hidden pointer-events-auto transition-all duration-300 ${
-              isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-            }`}
-            style={{ willChange: 'transform, opacity' }}
-          >
-            {/* Botão fechar mobile */}
-            <button
-              className="flex absolute top-2 right-2 text-white items-center justify-center bg-primary rounded-full h-6 w-6 transition-opacity hover:opacity-80"
-              onClick={handleClose}
-              aria-label="Fechar"
-            >
-              <CloseIcon />
-            </button>
-
-            <div className="flex flex-col gap-2 p-4">
-              <h3 className="text-xl md:text-2xl font-serif">{active.title}</h3>
-              <p className="text-muted-foreground text-sm">
-                {active.description}
-              </p>
-            </div>
-
-            {/* Imagem */}
-            <div className="relative px-4">
-              <Image
-                width={200}
-                height={200}
-                src={active.src}
-                alt={active.title}
-                className="w-full h-60 lg:h-60 sm:rounded-lg object-cover object-center"
-                // loading="lazy"
-              />
-            </div>
-
-            {/* Conteúdo */}
-            <div className="p-4 flex flex-col flex-1 min-h-0">
-              <div className="overflow-y-auto flex-1">
-                <p className="whitespace-pre-line">{active.content}</p>
+              {/* Imagem */}
+              <div className="relative px-4">
+                <Image
+                  width={200}
+                  height={200}
+                  src={selectedCard.src}
+                  alt={selectedCard.title}
+                  className="w-full h-60 lg:h-60 sm:rounded-lg object-cover object-center"
+                />
               </div>
 
-              <div className="flex justify-between items-start pt-4 shrink-0">
-                <div className="text-2xl font-serif text-primary">
-                  {active.priceFormatted}
+              {/* Conteúdo */}
+              <div className="p-4 flex flex-col flex-1 min-h-0">
+                <div className="overflow-y-auto flex-1">
+                  <p className="whitespace-pre-line">{selectedCard.content}</p>
                 </div>
 
-                <Button
-                  onClick={() => window.open(whatsappUrl, '_blank')}
-                  className="rounded-xl text-white"
-                >
-                  <ExternalLinkIcon className="h-5 w-5" />
-                  Pedir pelo WhatsApp
-                </Button>
+                <div className="flex justify-between items-start pt-4 shrink-0">
+                  <div className="text-2xl font-serif text-primary">
+                    {selectedCard.priceFormatted}
+                  </div>
+
+                  <Button
+                    onClick={() => window.open(whatsappUrl, '_blank')}
+                    className="rounded-xl text-white"
+                  >
+                    <ExternalLinkIcon className="h-5 w-5" />
+                    Pedir pelo WhatsApp
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Grid de cards */}
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map((card) => (
           <div
             key={card.id}
             onClick={() => handleCardClick(card)}
             className="bg-linear-to-b from-card-bg to-card-bg/10 dark:from-card-bg dark:to-card-bg/10 p-4 flex flex-col hover:bg-card-bg-hover dark:hover:bg-card-bg-hover rounded-xl cursor-pointer transition-colors border border-card-border dark:border-card-border shadow-md"
-            style={{ contain: 'layout style paint' }}
           >
             <div className="flex gap-4 flex-col w-full h-full">
               <div className="relative">
@@ -188,7 +143,6 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
                   src={card.src}
                   alt={card.title}
                   className="h-48 w-full rounded-lg object-cover object-center"
-                  // loading="lazy"
                 />
               </div>
               <div className="flex flex-col gap-2 h-full">
@@ -218,26 +172,5 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
         ))}
       </div>
     </>
-  )
-}
-
-const CloseIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-4 w-4 text-white"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M18 6l-12 12" />
-      <path d="M6 6l12 12" />
-    </svg>
   )
 }
