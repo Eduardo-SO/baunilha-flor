@@ -137,12 +137,12 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
 
             {/* Imagem */}
             <div className="relative px-4">
-              <img
+              <Image
                 width={200}
                 height={200}
                 src={active.src}
                 alt={active.title}
-                className="w-full h-60 lg:h-60 sm:rounded-lg object-cover object-top"
+                className="w-full h-60 lg:h-60 sm:rounded-lg object-cover object-center"
                 // loading="lazy"
               />
             </div>
@@ -182,7 +182,7 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
           >
             <div className="flex gap-4 flex-col w-full h-full">
               <div className="relative">
-                <img
+                <Image
                   width={100}
                   height={100}
                   src={card.src}

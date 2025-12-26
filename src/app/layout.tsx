@@ -32,19 +32,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="pt-BR" suppressHydrationWarning>
-        <head>
-          <script
-            async
-            crossOrigin="anonymous"
-            src="https://tweakcn.com/live-preview.min.js"
-          />
-        </head>
         <body
           className={`${openSans.variable} ${pacifico.variable} antialiased`}
         >
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
+            themes={['light']}
             enableSystem
             disableTransitionOnChange
           >
