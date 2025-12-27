@@ -94,8 +94,8 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
               {/* Imagem */}
               <div className="relative px-4">
                 <Image
-                  width={200}
-                  height={200}
+                  width={600}
+                  height={600}
                   src={selectedCard.src}
                   alt={selectedCard.title}
                   className="w-full h-60 lg:h-60 sm:rounded-lg object-cover object-center"
@@ -138,8 +138,8 @@ export function ExpandableCardGrid({ products }: ExpandableCardGridProps) {
             <div className="flex gap-4 flex-col w-full h-full">
               <div className="relative">
                 <Image
-                  width={100}
-                  height={100}
+                  width={300}
+                  height={300}
                   src={card.src}
                   alt={card.title}
                   className="h-48 w-full rounded-lg object-cover object-center"
